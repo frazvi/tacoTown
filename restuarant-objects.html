@@ -1,8 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="resto">
 <head>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+	<script src="restaurant-objects.js"></script>
 </head>
-<body>
-<script src="restaurant-objects.js"></script>
+<body ng-controller='frontEnd'>
+	<h2>{{tacoTown.name}}</h2>
+	<h4>{{tacoTown.description}}</h4>
+	<p ng-repeat="food in tacoTown.menu.plates">{{food.stringify()}}<br>{{food.description}}</p>
+<!-- Fancy Food - $3.00 -->
+<!-- Food made of fancy things -->
+<!-- AddItem     RemoveItem -->
 </body>
 </html>
