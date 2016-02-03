@@ -5,41 +5,36 @@ resto.controller('frontEnd', ['$scope', 'facto', function($scope, facto)
 	$scope.facto = facto;
 	$scope.tacoTown = facto.tacoTown;
 
-	$scope.order = {
-				
-	}
-
 	var Order = function() {
-		this.foods = [],
-		this.total = 0
+		this.foods = [];
+		this.total = 0;
+		this.show = false;
 	}
 
 	Order.prototype = {
 		computePrice : function() {
-			this.total = 0;
+			var runningTotal = 0
 			this.foods.forEach(function(item) {
-				this.total += item.price;
+				runningTotal += item.price;
 			})
+			this.total = runningTotal
 		},
 		addItem : function(item) {
 			this.foods.push(item);
 			this.computePrice();
+			this.show = true;
 		},
 		removeItem : function(item) {
 			var index = this.foods.indexOf(item);
 			if (index) { this.foods.splice(index, 1); }
 			this.computePrice()
+			if (this.foods.length < 1) { this.show = false; }
 		}
 	}
-
-	// track orders; add them to the "order"
-		// compute price
+	$scope.order = new Order();
 
 
-
-	$scope.computePrice(order)
-
-	console.log($scope.tacoTown);
+	// console.log($scope.tacoTown);
 
 }])
 
