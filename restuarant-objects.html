@@ -14,8 +14,15 @@
 <!-- Fancy Food - $3.00 -->
 <!-- Food made of fancy things -->
 <!-- AddItem     RemoveItem -->
-	<div style="background-color: red; float: right" ng-show="order.show">
-		<h2>TAKE UP SPACE!!</h2>
+
+	<div style="background-color: red; float: right; padding-right: 20px" ng-show="order.show">
+		<h1> Cart - {{order.total | currency}} </h1>
+		<ul>
+			<li ng-repeat="item in order.foods" ng-click="order.removeItem(item)">{{item.name}} - {{item.price | currency}}</li>
+		
+
+
+		</ul>
 	</div>
 <!-- Item (2)     X -->
 <!-- Item 		  X -->

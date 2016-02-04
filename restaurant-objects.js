@@ -11,6 +11,7 @@ resto.controller('frontEnd', ['$scope', 'facto', function($scope, facto)
 		this.show = false;
 	}
 
+
 	Order.prototype = {
 		computePrice : function() {
 			var runningTotal = 0
@@ -24,13 +25,17 @@ resto.controller('frontEnd', ['$scope', 'facto', function($scope, facto)
 			this.computePrice();
 			this.show = true;
 		},
+
 		removeItem : function(item) {
 			var index = this.foods.indexOf(item);
-			if (index) { this.foods.splice(index, 1); }
+			if (index != -1) { this.foods.splice(index, 1); }
 			this.computePrice()
 			if (this.foods.length < 1) { this.show = false; }
-		}
+			console.log(item)
+
 	}
+		}
+
 	$scope.order = new Order();
 
 
@@ -83,28 +88,40 @@ resto.factory('facto', function() {
 		stringify: function () {
 			var output = this.name + ' - $' 
 			+ this.price.toString() + '\n' 
+			if (this.isVegan()) {
+				output += ' - V'
+			}
+			if (this.isGlutenFree()) {
+				output += ' - GF'
+			}
+			if (this.isCitrusFree()) {
+				output += ' - Citrus Free'
+			}
 			return output
 		},
 
 		isVegan: function () {
-			this.ingredients.forEach (function(ingredient) {
-				if (!ingredient.isVegan) { return false }
+			var result = true;
+			this.ingredients.forEach(function(ingredient) {
+				if (!ingredient.vegan) { result = false }
 			}); 	
-			return true
+			return result
 		},
 
 		isGlutenFree: function () {
-			this.ingredients.forEach (function(ingredient) {
-				if (!ingredient.isGlutenFree) { return false }
+			var result = true;
+			this.ingredients.forEach(function(ingredient) {
+				if (!ingredient.glutenFree) { result = false }
 			});
-			return true
+			return result
 		},
 
 		isCitrusFree: function () {
-			this.ingredients.forEach (function(ingredient) {
-				if (!ingredient.isCitrusFree) { return false }
+			var result = true;
+			this.ingredients.forEach(function(ingredient) {
+				if (!ingredient.citrusFree) { result = false }
 			});
-			return true
+			return result
 		}
 	}
 
